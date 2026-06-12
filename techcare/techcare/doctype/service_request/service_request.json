@@ -1,0 +1,35 @@
+{
+ "doctype": "DocType",
+ "name": "Service Request",
+ "module": "TechCare",
+ "engine": "InnoDB",
+ "naming_rule": "Expression (old style)",
+ "autoname": "SR-.YYYY.-.#####",
+ "title_field": "customer_name",
+ "track_changes": 1,
+ "fields": [
+  {"fieldname": "customer", "fieldtype": "Link", "label": "Customer", "options": "Customer", "reqd": 1, "in_standard_filter": 1},
+  {"fieldname": "customer_name", "fieldtype": "Data", "label": "Customer Name", "fetch_from": "customer.customer_name", "read_only": 1, "in_list_view": 1},
+  {"fieldname": "device", "fieldtype": "Link", "label": "Device", "options": "Device", "reqd": 1, "in_list_view": 1},
+  {"fieldname": "column_break_1", "fieldtype": "Column Break"},
+  {"fieldname": "status", "fieldtype": "Select", "label": "Status", "options": "Open\nAssigned\nIn Progress\nWaiting for Parts\nResolved\nClosed\nCancelled", "default": "Open", "reqd": 1, "in_list_view": 1, "in_standard_filter": 1},
+  {"fieldname": "priority", "fieldtype": "Select", "label": "Priority", "options": "Critical\nHigh\nMedium\nLow", "default": "Medium", "reqd": 1, "in_list_view": 1, "in_standard_filter": 1},
+  {"fieldname": "assigned_technician", "fieldtype": "Link", "label": "Assigned Technician", "options": "Technician Profile", "in_standard_filter": 1},
+  {"fieldname": "issue_section", "fieldtype": "Section Break", "label": "Issue"},
+  {"fieldname": "issue_description", "fieldtype": "Text Editor", "label": "Issue Description", "reqd": 1},
+  {"fieldname": "sla_section", "fieldtype": "Section Break", "label": "SLA"},
+  {"fieldname": "sla_due", "fieldtype": "Datetime", "label": "SLA Due", "read_only": 1},
+  {"fieldname": "sla_status", "fieldtype": "Select", "label": "SLA Status", "options": "On Track\nAt Risk\nBreached", "default": "On Track", "read_only": 1, "in_list_view": 1},
+  {"fieldname": "column_break_2", "fieldtype": "Column Break"},
+  {"fieldname": "resolved_on", "fieldtype": "Datetime", "label": "Resolved On", "read_only": 1},
+  {"fieldname": "customer_rating", "fieldtype": "Int", "label": "Customer Rating (1-5)"}
+ ],
+ "permissions": [
+  {"role": "Service Manager", "read": 1, "write": 1, "create": 1, "delete": 1},
+  {"role": "Service Technician", "read": 1, "write": 1, "create": 1},
+  {"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1}
+ ],
+ "owner": "Administrator",
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

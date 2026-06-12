@@ -1,0 +1,96 @@
+{% extends "templates/web.html" %}
+
+{% block title %}Technician Portal{% endblock %}
+
+{% block page_content %}
+<div class="tc-portal">
+  <div class="tc-header">
+    <h2>My Jobs</h2>
+    <p class="text-muted">Welcome, {{ technician_name }}</p>
+  </div>
+
+  {% if not jobs %}
+  <div class="tc-empty">
+    <p>🎉 No open jobs assigned to you. Enjoy the calm.</p>
+  </div>
+  {% endif %}
+
+  {% for job in jobs %}
+  <div class="tc-card" data-name="{{ job.name }}">
+    <div class="tc-card-top">
+      <span class="tc-id">{{ job.name }}</span>
+      <span class="tc-badge tc-priority-{{ job.priority | lower }}">{{ job.priority }}</span>
+    </div>
+    <div class="tc-customer">{{ job.customer_name }}</div>
+    <div class="tc-issue">{{ frappe.utils.strip_html(job.issue_description or "")[:140] }}</div>
+    <div class="tc-meta">
+      <span class="tc-badge tc-status">{{ job.status }}</span>
+      {% if job.sla_due %}
+      <span class="tc-sla">SLA: {{ frappe.utils.format_datetime(job.sla_due, "dd MMM, HH:mm") }}</span>
+      {% endif %}
+    </div>
+    <div class="tc-actions">
+      {% if job.status == "Assigned" %}
+      <button class="btn btn-primary btn-sm tc-action" data-action="start">Start Work</button>
+      {% elif job.status == "In Progress" %}
+      <button class="btn btn-warning btn-sm tc-action" data-action="parts">Need Parts</button>
+      <button class="btn btn-success btn-sm tc-action" data-action="resolve">Mark Resolved</button>
+      {% elif job.status == "Waiting for Parts" %}
+      <button class="btn btn-primary btn-sm tc-action" data-action="resume">Resume Work</button>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<style>
+.tc-portal { max-width: 640px; margin: 0 auto; padding: 12px; }
+.tc-header h2 { margin-bottom: 2px; }
+.tc-card {
+  border: 1px solid #e2e6ea; border-radius: 10px;
+  padding: 14px; margin-bottom: 12px; background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.tc-card-top { display: flex; justify-content: space-between; align-items: center; }
+.tc-id { font-weight: 600; font-size: 0.85rem; color: #6c757d; }
+.tc-customer { font-weight: 600; font-size: 1.05rem; margin-top: 6px; }
+.tc-issue { color: #495057; font-size: 0.9rem; margin: 6px 0; }
+.tc-meta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 10px; }
+.tc-badge {
+  display: inline-block; padding: 2px 10px; border-radius: 12px;
+  font-size: 0.75rem; font-weight: 600; background: #f1f3f5; color: #495057;
+}
+.tc-priority-critical { background: #ffe3e3; color: #c92a2a; }
+.tc-priority-high { background: #fff3bf; color: #e67700; }
+.tc-priority-medium { background: #d0ebff; color: #1971c2; }
+.tc-priority-low { background: #e9fac8; color: #5c940d; }
+.tc-sla { font-size: 0.78rem; color: #868e96; }
+.tc-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.tc-empty { text-align: center; padding: 40px 0; color: #868e96; }
+@media (max-width: 480px) {
+  .tc-actions .btn { flex: 1; }
+}
+</style>
+
+<script>
+frappe.ready(function () {
+  document.querySelectorAll(".tc-action").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      const card = btn.closest(".tc-card");
+      const name = card.dataset.name;
+      const action = btn.dataset.action;
+      btn.disabled = true;
+
+      frappe.call({
+        method: "techcare.api.portal.update_job_status",
+        args: { service_request: name, action: action },
+        callback: function (r) {
+          if (!r.exc) window.location.reload();
+        },
+        error: function () { btn.disabled = false; }
+      });
+    });
+  });
+});
+</script>
+{% endblock %}

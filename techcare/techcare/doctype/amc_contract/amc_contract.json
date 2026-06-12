@@ -1,0 +1,35 @@
+{
+ "doctype": "DocType",
+ "name": "AMC Contract",
+ "module": "TechCare",
+ "engine": "InnoDB",
+ "naming_rule": "Expression (old style)",
+ "autoname": "AMC-.YYYY.-.#####",
+ "title_field": "customer_name",
+ "is_submittable": 1,
+ "track_changes": 1,
+ "fields": [
+  {"fieldname": "customer", "fieldtype": "Link", "label": "Customer", "options": "Customer", "reqd": 1, "in_standard_filter": 1},
+  {"fieldname": "customer_name", "fieldtype": "Data", "label": "Customer Name", "fetch_from": "customer.customer_name", "read_only": 1, "in_list_view": 1},
+  {"fieldname": "status", "fieldtype": "Select", "label": "Status", "options": "Draft\nActive\nExpired\nCancelled", "default": "Draft", "read_only": 1, "in_list_view": 1, "in_standard_filter": 1},
+  {"fieldname": "column_break_1", "fieldtype": "Column Break"},
+  {"fieldname": "start_date", "fieldtype": "Date", "label": "Start Date", "reqd": 1, "in_list_view": 1},
+  {"fieldname": "end_date", "fieldtype": "Date", "label": "End Date", "reqd": 1, "in_list_view": 1},
+  {"fieldname": "contract_value", "fieldtype": "Currency", "label": "Contract Value"},
+  {"fieldname": "visit_frequency", "fieldtype": "Select", "label": "Visit Frequency", "options": "Monthly\nQuarterly\nHalf-Yearly\nYearly", "default": "Quarterly", "reqd": 1},
+  {"fieldname": "devices_section", "fieldtype": "Section Break", "label": "Covered Devices"},
+  {"fieldname": "covered_devices", "fieldtype": "Table", "label": "Covered Devices", "options": "AMC Covered Device", "reqd": 1},
+  {"fieldname": "schedule_section", "fieldtype": "Section Break", "label": "Visit Schedule"},
+  {"fieldname": "visit_schedule", "fieldtype": "Table", "label": "Visit Schedule", "options": "AMC Visit Schedule"},
+  {"fieldname": "terms_section", "fieldtype": "Section Break", "label": "Terms"},
+  {"fieldname": "terms", "fieldtype": "Text Editor", "label": "Terms and Conditions"}
+ ],
+ "permissions": [
+  {"role": "Service Manager", "read": 1, "write": 1, "create": 1, "delete": 1, "submit": 1, "cancel": 1, "amend": 1},
+  {"role": "Service Technician", "read": 1},
+  {"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1, "submit": 1, "cancel": 1, "amend": 1}
+ ],
+ "owner": "Administrator",
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

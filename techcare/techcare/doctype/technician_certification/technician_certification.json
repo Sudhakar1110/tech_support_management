@@ -1,0 +1,17 @@
+{
+ "doctype": "DocType",
+ "name": "Technician Certification",
+ "module": "TechCare",
+ "engine": "InnoDB",
+ "istable": 1,
+ "fields": [
+  {"fieldname": "certification_name", "fieldtype": "Data", "label": "Certification", "reqd": 1, "in_list_view": 1},
+  {"fieldname": "issued_by", "fieldtype": "Data", "label": "Issued By", "in_list_view": 1},
+  {"fieldname": "valid_till", "fieldtype": "Date", "label": "Valid Till", "in_list_view": 1},
+  {"fieldname": "certificate_file", "fieldtype": "Attach", "label": "Certificate File"}
+ ],
+ "permissions": [],
+ "owner": "Administrator",
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

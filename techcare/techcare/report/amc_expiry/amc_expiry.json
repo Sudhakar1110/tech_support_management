@@ -1,0 +1,14 @@
+{
+ "doctype": "Report",
+ "name": "AMC Expiry",
+ "report_name": "AMC Expiry",
+ "ref_doctype": "AMC Contract",
+ "report_type": "Script Report",
+ "module": "TechCare",
+ "is_standard": "Yes",
+ "disabled": 0,
+ "roles": [
+  {"role": "Service Manager"},
+  {"role": "System Manager"}
+ ]
+}
