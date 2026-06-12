@@ -1,0 +1,22 @@
+{
+ "doctype": "DocType",
+ "name": "TechCare Settings",
+ "module": "TechCare",
+ "engine": "InnoDB",
+ "issingle": 1,
+ "fields": [
+  {"fieldname": "sla_section", "fieldtype": "Section Break", "label": "SLA Hours by Priority"},
+  {"fieldname": "critical_sla_hours", "fieldtype": "Int", "label": "Critical (hours)", "default": "4"},
+  {"fieldname": "high_sla_hours", "fieldtype": "Int", "label": "High (hours)", "default": "8"},
+  {"fieldname": "column_break_1", "fieldtype": "Column Break"},
+  {"fieldname": "medium_sla_hours", "fieldtype": "Int", "label": "Medium (hours)", "default": "24"},
+  {"fieldname": "low_sla_hours", "fieldtype": "Int", "label": "Low (hours)", "default": "72"}
+ ],
+ "permissions": [
+  {"role": "Service Manager", "read": 1, "write": 1},
+  {"role": "System Manager", "read": 1, "write": 1}
+ ],
+ "owner": "Administrator",
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

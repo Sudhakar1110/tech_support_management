@@ -1,0 +1,13 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.txt
+recursive-include techcare *.css
+recursive-include techcare *.csv
+recursive-include techcare *.html
+recursive-include techcare *.js
+recursive-include techcare *.json
+recursive-include techcare *.md
+recursive-include techcare *.py
+recursive-exclude * *.pyc
