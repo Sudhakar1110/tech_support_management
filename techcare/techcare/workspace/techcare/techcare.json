@@ -1,0 +1,75 @@
+{
+ "doctype": "Workspace",
+ "name": "TechCare",
+ "module": "TechCare",
+ "icon": "fa fa-wrench",
+ "color": "#1971c2",
+ "idx": 1,
+ "label": "TechCare",
+ "category": "Modules",
+ "is_default": 0,
+ "restrict_to_domain": "",
+ "roles": [],
+ "sequence_id": 1,
+ "shortcuts": [
+  {
+   "label": "Service Request",
+   "link": "List/Service Request",
+   "icon": "fa fa-ticket",
+   "shortcut_type": "DocType",
+   "doctype": "Service Request"
+  },
+  {
+   "label": "AMC Contract",
+   "link": "List/AMC Contract",
+   "icon": "fa fa-file-contract",
+   "shortcut_type": "DocType",
+   "doctype": "AMC Contract"
+  },
+  {
+   "label": "Service Report",
+   "link": "List/Service Report",
+   "icon": "fa fa-clipboard-list",
+   "shortcut_type": "DocType",
+   "doctype": "Service Report"
+  },
+  {
+   "label": "Device",
+   "link": "List/Device",
+   "icon": "fa fa-desktop",
+   "shortcut_type": "DocType",
+   "doctype": "Device"
+  },
+  {
+   "label": "Technician Profile",
+   "link": "List/Technician Profile",
+   "icon": "fa fa-user-cog",
+   "shortcut_type": "DocType",
+   "doctype": "Technician Profile"
+  }
+ ],
+ "cards": [
+  {
+   "label": "Reports",
+   "items": [
+    {
+     "label": "Technician Performance",
+     "link": "Report/Technician Performance",
+     "icon": "fa fa-chart-line",
+     "doctype": "Report"
+    },
+    {
+     "label": "AMC Expiry",
+     "link": "Report/AMC Expiry",
+     "icon": "fa fa-clock",
+     "doctype": "Report"
+    }
+   ]
+  }
+ ],
+ "charts": [],
+ "number_cards": [],
+ "quick_lists": [],
+ "allow_customization": 1,
+ "is_hidden": 0
+}

@@ -4,6 +4,7 @@ app_publisher = "TechCare"
 app_description = "Device service, repair & AMC management"
 app_email = "admin@example.com"
 app_license = "MIT"
+app_version = "1.0.0"
 
 after_install = "techcare.install.after_install"
 

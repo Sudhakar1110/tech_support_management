@@ -10,6 +10,7 @@ FREQUENCY_MONTHS = {
     "Yearly": 12,
 }
 
+
 class AMCContract(Document):
     def validate(self):
         if getdate(self.end_date) <= getdate(self.start_date):
@@ -43,3 +44,29 @@ class AMCContract(Document):
             visit_date = add_months(visit_date, months)
 
         self.save()
+
+
+def get_permission_query_conditions(user):
+    if not user:
+        user = frappe.session.user
+    
+    if "System Manager" in frappe.get_roles(user):
+        return None
+    
+    if "Service Manager" in frappe.get_roles(user):
+        return None
+    
+    return "1 = 0"
+
+
+def has_permission(doc, ptype, user):
+    if not user:
+        user = frappe.session.user
+    
+    if "System Manager" in frappe.get_roles(user):
+        return True
+    
+    if "Service Manager" in frappe.get_roles(user):
+        return True
+    
+    return False

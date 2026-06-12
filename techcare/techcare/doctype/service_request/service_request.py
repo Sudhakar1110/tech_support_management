@@ -12,6 +12,7 @@ SLA_FIELD_MAP = {
 
 DEFAULT_SLA_HOURS = {"Critical": 4, "High": 8, "Medium": 24, "Low": 72}
 
+
 class ServiceRequest(Document):
     def validate(self):
         self.set_sla_due()
@@ -43,3 +44,43 @@ class ServiceRequest(Document):
             self.resolved_on = now_datetime()
         if self.status not in ("Resolved", "Closed"):
             self.resolved_on = None
+
+
+def get_permission_query_conditions(user):
+    if not user:
+        user = frappe.session.user
+    
+    if "System Manager" in frappe.get_roles(user):
+        return None
+    
+    if "Service Manager" in frappe.get_roles(user):
+        return None
+    
+    if "Service Technician" in frappe.get_roles(user):
+        technician = frappe.db.get_value(
+            "Technician Profile", {"user": user}, "name"
+        )
+        if technician:
+            return f"`tabService Request`.assigned_technician = '{technician}'"
+    
+    return "1 = 0"
+
+
+def has_permission(doc, ptype, user):
+    if not user:
+        user = frappe.session.user
+    
+    if "System Manager" in frappe.get_roles(user):
+        return True
+    
+    if "Service Manager" in frappe.get_roles(user):
+        return True
+    
+    if "Service Technician" in frappe.get_roles(user):
+        technician = frappe.db.get_value(
+            "Technician Profile", {"user": user}, "name"
+        )
+        if technician and doc.assigned_technician == technician:
+            return True
+    
+    return False
